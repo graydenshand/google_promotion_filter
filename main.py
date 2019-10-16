@@ -139,5 +139,11 @@ def process2():
     flash('Filter made')
     return redirect(url_for('index'))
 
+@app.route('/clear')
+def clear():
+    session.clear()
+    session.modified = True
+    return redirect('/')
+
 if __name__ == '__main__':
     app.run(ssl_context='adhoc')
