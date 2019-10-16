@@ -11,7 +11,7 @@ session = Session()
 # Credentials you get from registering a new application
 client_id = os.environ.get("CLIENT_ID")
 client_secret = os.environ.get("CLIENT_SECRET")
-redirect_uri = "https://127.0.0.1:5000/"
+redirect_uri = "https://promotions-filter.herokuapp.com"
 # OAuth endpoints given in the Google API documentation
 authorization_base_url = "https://accounts.google.com/o/oauth2/v2/auth"
 token_url = "https://www.googleapis.com/oauth2/v4/token"
