@@ -1,0 +1,24 @@
+<html>
+<head>
+</head>
+<body>
+    <table width="300px">
+        <tr>
+            <td width='30%'>
+                <img src="{{img}}" style='display: inline; width:50;'/>
+            </td>
+            <td width='30%'>
+                <b>{{name}}</b>
+            </td>
+            <td width='30%'>
+                {{email}}
+            </td>
+        </tr>
+    </table>
+    <a href='/process'>Get Existing</a>
+    <a href='/process2'>Build Filter</a>
+    {% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+    {% endfor %}
+</body>
+</html>
