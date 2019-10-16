@@ -1,24 +1,34 @@
-<html>
+<html style='height: 100vh'>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
-    <table width="300px">
-        <tr>
-            <td width='30%'>
-                <img src="{{img}}" style='display: inline; width:50;'/>
-            </td>
-            <td width='30%'>
-                <b>{{name}}</b>
-            </td>
-            <td width='30%'>
-                {{email}}
-            </td>
-        </tr>
-    </table>
-    <a href='/process'>Get Existing</a>
-    <a href='/process2'>Build Filter</a>
-    {% for message in get_flashed_messages() %}
-    <p>{{message}}</p>
-    {% endfor %}
+<body style='height: 100%'>
+    <div class='container'>
+        {% for message in get_flashed_messages() %}
+        <div class='alert alert-success alert-dismissible fade show'>
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    <div class='container' style='display: flex; justify-content: center; align-items: center; height: 100vh'>
+        <div class='card col-sm-6' style='vertical-align: middle; height: 300px; border-radius: 2em;'>  
+            <div class='card-body'>
+                <div class='text-center'>
+                    <img src="{{img}}" style='display: inline; width:100; margin-bottom: 2em; border-radius: 50%;'/>
+                    <h4>{{name | upper}}</h4>
+                    <p class='lead'>{{email | lower}}</p>
+                    <a href='/process' class='card-link'>Pull Existing</a>
+                    <a href='/process2' class='card-link'>Build Filter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
