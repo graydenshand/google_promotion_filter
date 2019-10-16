@@ -65,6 +65,7 @@ whitelist = ['sethgodin.com', 'adobe.com']
 
 @app.route("/")
 def index():
+    print("on / {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
         google = OAuth2Session(client_id, token=session['token'])
         if session['token']['expires_at'] < time()+10:
@@ -96,7 +97,7 @@ def index():
 
 @app.route("/login")
 def login():
-    global redirect_uri 
+    print("on /login {}".format(session))
     session['redirect_uri'] = request.url_root.rstrip('/login')
     session.modified = True
     google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
@@ -113,6 +114,7 @@ def login():
 
 @app.route('/process')
 def process():
+    print("on /process {}".format(session))
     google = OAuth2Session(client_id, token=session['token'])
     if session['token']['expires_at'] < time()+10:
         refresh_token()
@@ -137,12 +139,14 @@ def process():
 
 @app.route('/process2')
 def process2():
+    print("on /process2 {}".format(session))
     print(create_filter(whitelist))
     flash('Filter made')
     return redirect(url_for('index'))
 
 @app.route('/clear')
 def clear():
+    print("on /clear {}".format(session))
     session.clear()
     session.modified = True
     return redirect('/')
