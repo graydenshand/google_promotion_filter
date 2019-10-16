@@ -6,7 +6,7 @@ from flask import Flask, request, url_for, redirect, render_template, session, f
 from flask_sslify import SSLify
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ.get("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=365)
 
 # Credentials you get from registering a new application
