@@ -75,7 +75,7 @@ def index():
     else:
         redirect_response = request.url
         if request.args.get('state') not in ('', None):
-            google = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri, state=session['state'])
+            google = OAuth2Session(client_id, scope=scope, redirect_uri=request.url_root, state=session['state'])
             # Fetch the access token
             token = google.fetch_token(token_url, client_secret=client_secret,
                     authorization_response=redirect_response)
