@@ -11,7 +11,7 @@ session = Session()
 # Credentials you get from registering a new application
 client_id = os.environ.get("CLIENT_ID")
 client_secret = os.environ.get("CLIENT_SECRET")
-redirect_uri = "https://promotions-filter.herokuapp.com"
+#redirect_uri = "https://nimpf.akimbo.com"
 # OAuth endpoints given in the Google API documentation
 authorization_base_url = "https://accounts.google.com/o/oauth2/v2/auth"
 token_url = "https://www.googleapis.com/oauth2/v4/token"
@@ -94,7 +94,7 @@ def index():
 
 @app.route("/login")
 def login():
-    google = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
+    google = OAuth2Session(client_id, scope=scope, redirect_uri=request.url_root.rstrip('/login'))
 
     # Redirect user to Google for authorization
     authorization_url, state = google.authorization_url(authorization_base_url,
