@@ -1,12 +1,12 @@
 from requests_oauthlib import OAuth2Session
 import json, csv, os, requests, re
 from time import time
-from flask import Flask, request, url_for, redirect, render_template, Session, flash, get_flashed_messages
+from flask import Flask, request, url_for, redirect, render_template, session, flash, get_flashed_messages
 from flask_sslify import SSLify
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-session = Session()
+
 
 # Credentials you get from registering a new application
 client_id = os.environ.get("CLIENT_ID")
