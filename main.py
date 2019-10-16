@@ -97,6 +97,7 @@ def index():
 def login():
     global redirect_uri 
     session['redirect_uri'] = request.url_root.rstrip('/login')
+    session.modified = True
     google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
 
     # Redirect user to Google for authorization
