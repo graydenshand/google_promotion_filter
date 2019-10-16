@@ -25,6 +25,7 @@ scope = [
 ]
 
 def refresh_token():
+    google = OAuth2Session(client_id, token=session['token'])
     extra = {
         'client_id': client_id,
         'client_secret': client_secret,
