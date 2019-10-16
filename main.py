@@ -75,7 +75,7 @@ def index():
     else:
         redirect_response = request.url
         if request.args.get('state') not in ('', None):
-            google = OAuth2Session(client_id, scope=scope, redirect_uri=request.url_root, state=session['state'])
+            google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'], state=session['state'])
             # Fetch the access token
             token = google.fetch_token(token_url, client_secret=client_secret,
                     authorization_response=redirect_response)
@@ -94,7 +94,9 @@ def index():
 
 @app.route("/login")
 def login():
-    google = OAuth2Session(client_id, scope=scope, redirect_uri=request.url_root.rstrip('/login'))
+    global redirect_uri 
+    session['redirect_uri'] = request.url_root.rstrip('/login')
+    google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
 
     # Redirect user to Google for authorization
     authorization_url, state = google.authorization_url(authorization_base_url,
