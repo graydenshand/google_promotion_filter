@@ -68,7 +68,7 @@ whitelist = ['sethgodin.com', 'adobe.com']
 def index():
     print("on / {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
-        session['token']['expires_at'] = time() - 10
+        #session['token']['expires_at'] = time() - 10
         google = OAuth2Session(client_id, token=session['token'])
         if session['token']['expires_at'] < time()+10:
             google = refresh_token()
