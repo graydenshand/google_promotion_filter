@@ -34,11 +34,12 @@ def refresh_token():
     session['token'] = google.refresh_token(refresh_url, **extra)
     session.modified = True
     print('token updated!')
+    return google
 
 def remove_label(message_id):
     google = OAuth2Session(client_id, token=session['token'])
     if session['token']['expires_at'] < time()+10:
-        refresh_token()
+        google = refresh_token()
     params = {"removeLabelIds": ['CATEGORY_PROMOTIONS'], "addLabelIds": ['CATEGORY_PERSONAL']}
     headers = {"Content-Type": "application/json"}
     r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
@@ -47,7 +48,7 @@ def remove_label(message_id):
 def create_filter(whitelist):
     google = OAuth2Session(client_id, token=session['token'])
     if session['token']['expires_at'] < time()+10:
-        refresh_token()
+        google = refresh_token()
     headers = {"Content-Type": "application/json"}
     params = {
         "criteria": {
@@ -67,9 +68,10 @@ whitelist = ['sethgodin.com', 'adobe.com']
 def index():
     print("on / {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
+        session['token']['expires_at'] = time() - 10
         google = OAuth2Session(client_id, token=session['token'])
         if session['token']['expires_at'] < time()+10:
-            refresh_token()
+            google = refresh_token()
         r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
         #print(r.json())
         data = r.json()
@@ -117,7 +119,7 @@ def process():
     print("on /process {}".format(session))
     google = OAuth2Session(client_id, token=session['token'])
     if session['token']['expires_at'] < time()+10:
-        refresh_token()
+        google = refresh_token()
     r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=CATEGORY_PROMOTIONS")
     promo_messages = r.json()['messages']
     for i, row in enumerate(promo_messages):
