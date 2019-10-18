@@ -6,8 +6,6 @@ from flask import Flask, request, url_for, redirect, render_template, session, f
 from flask_sslify import SSLify
 from config import *
 from user import User
-from worker import conn
-
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
