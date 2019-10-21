@@ -8,7 +8,7 @@ from threading import Thread
 
 class User():
     """
-    Data type for users/users of this system
+    Data type for users/users of this system.
 
     Public methods:
         * create
@@ -19,6 +19,10 @@ class User():
         * created_at
         * filter_made
         * make_filter
+        * clear_promo_folder
+        * json
+        * delete_filter
+        * user_info
     """
 
     def __init__(self, data=None):
@@ -100,7 +104,7 @@ class User():
         _dict = {'email': self.email(), 'name': self.name(), 'token': self.token(), 'filter_made': self.filter_made(), 'created_at': self.created_at().timestamp(), "filter_id": self.filter_id()}
         return json.dumps(_dict)
 
-    def make_filter(self):
+    def make_filter(self, wait_time=1):
         if self._email is None:
             raise Exception('No user specified: use .get_by_email() or .create() first')
         if self._token is None:
@@ -130,9 +134,16 @@ class User():
             self._filter_made = True
             self._filter_id = filter_id 
             return True
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self.make_filter(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
         else:
             # TODO -- error handling
-            print(r.text)
+            print(r.text, r.status_code)
             return False
 
     def refresh_token(self):
@@ -145,25 +156,36 @@ class User():
         print('token updated!')
         return google
 
-    def user_info(self):
+    def user_info(self, wait_time=1):
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time() + 10:
             google = self.refresh_token()
         r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
-        data = r.json()
-        if self._name != data['name']:
-            db = Db()
-            sql = 'UPDATE participant SET name = %s WHERE email = %s;'
-            params = [data['name'], self._email]
-            db.query(sql, params)
-            self._name = data['name']
-        if self._email != data['email']:
-            db = Db()
-            sql = 'UPDATE participant SET name = %s WHERE email = %s;'
-            params = [data['email'], self._email]
-            db.query(sql, params)
-            self._email = data['email']
-        return r.json()
+        if r.status_code == 200:
+            data = r.json()
+            if self._name != data['name']:
+                db = Db()
+                sql = 'UPDATE participant SET name = %s WHERE email = %s;'
+                params = [data['name'], self._email]
+                db.query(sql, params)
+                self._name = data['name']
+            if self._email != data['email']:
+                db = Db()
+                sql = 'UPDATE participant SET name = %s WHERE email = %s;'
+                params = [data['email'], self._email]
+                db.query(sql, params)
+                self._email = data['email']
+            return r.json()
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self.user_info(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
+        else:
+            print(r.status_code, r.text)
+            return False
 
     def set_token(self, token):
         if self._email is None:
@@ -175,29 +197,49 @@ class User():
         self._token = token
         return self
 
-    def get_messages(self):
+    def _get_messages(self, wait_time=1):
         if self.token() is None:
             raise Exception("User's Oauth2 token is None")
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
         r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=CATEGORY_PROMOTIONS")
-        return r.json()['messages']
 
-    def get_message(self, message_id):
+        if str(r.status_code)[0] == '2':
+            return r.json()['messages']
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self._get_messages(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
+        else:
+            print(r.status_code, r.text)
+            return False
+
+    def _get_message(self, message_id, wait_time=1):
         if self.token() is None:
             raise Exception("User's Oauth2 token is None")
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
-        try:
-            r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages/{}".format(message_id))
-        except:
-            sleep(1)
-            return self.get_message(message_id)
-        return r.json()
+        r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages/{}".format(message_id))
+        
+        if str(r.status_code)[0] == '2':
+            return r.json()
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self._get_message(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
+        else:
+            print(r.status_code, r.text)
+            return False
 
-    def remove_label(self, message_id):
+    def _remove_label(self, message_id, wait_time=1):
         if self.token() is None:
             raise Exception("User's Oauth2 token is None")
         google = OAuth2Session(client_id, token=self.token())
@@ -205,16 +247,23 @@ class User():
             google = self.refresh_token()
         params = {"removeLabelIds": ['CATEGORY_PROMOTIONS'], "addLabelIds": ['CATEGORY_PERSONAL']}
         headers = {"Content-Type": "application/json"}
-        try:
-            r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
-        except:
-            sleep(1)
-            r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
-        return r.text
+        r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
+        if str(r.status_code)[0] == '2':
+            return True
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self._remove_label(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
+        else:
+            print(r.status_code, r.text)
+            return False
 
     def _validate_message(self, message_id):
-        print('new thread {}'.format(message_id))
-        message = self.get_message(message_id)
+        print("new thread {}".format(message_id))
+        message = self._get_message(message_id)
         for val in message['payload']['headers']:
             if val['name'] == 'From':
                 sender = val['value']
@@ -225,29 +274,23 @@ class User():
                 for whitelisted_domain in whitelist:
                     if whitelisted_domain in domain: # gracefully handle subdomains
                         print(domain, 'removed')
-                        self.remove_label(row['id'])
+                        self._remove_label(message_id)
 
     def clear_promo_folder(self):
-        promo_messages = self.get_messages()
+        promo_messages = self._get_messages()
         for i, row in enumerate(promo_messages):
             t = Thread(target=self._validate_message, args=(row['id'],))
             t.start()
         return True
 
-    def go(self):
-        self.clear_promo_folder()
-        return self.make_filter()
-
-    def delete_filter(self):
+    def delete_filter(self, wait_time=1):
         if self.filter_id() is None:
             raise Exception('Filter id not defined')
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
         url = "https://www.googleapis.com/gmail/v1/users/me/settings/filters/{}".format(self.filter_id())
-        print(url)
         r = google.delete(url)
-        print(r.status_code)
         if str(r.status_code)[0] == '2':
             db = Db()
             sql = 'UPDATE participant set filter_made = %s, filter_id = %s where email = %s;'
@@ -256,8 +299,15 @@ class User():
             self._filter_id = None
             self._filter_made = False
             return True
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self.delete_filter(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
         else:
-            print(r.text, r)
+            print(r.status_code, r.text)
             return False
         
 

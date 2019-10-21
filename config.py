@@ -14,4 +14,11 @@ scope = [
     "https://www.googleapis.com/auth/gmail.settings.basic",
     "https://www.googleapis.com/auth/gmail.modify",
 ]
-whitelist = ['sethgodin.com', 'adobe.com', 'alxpck.com', 'altmba.com']
+
+
+whitelist = [
+'sethgodin.com', 
+'adobe.com', 
+'alxpck.com', 
+'altmba.com'
+]
