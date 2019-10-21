@@ -18,7 +18,6 @@ scope = [
 
 whitelist = [
 'sethgodin.com', 
-'adobe.com', 
 'alxpck.com', 
 'altmba.com'
 ]
