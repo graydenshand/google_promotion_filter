@@ -84,7 +84,7 @@ def process():
             flash('Error cleaning promo folder', 'danger')
         """
         #job = q.enqueue(process_user, u.json())
-        job_id = u.go()
+        job_id = u.make_filter()
         flash('Success', 'success')
     session['user'] = u.json() 
     session.modified = True
