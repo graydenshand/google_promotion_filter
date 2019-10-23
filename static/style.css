@@ -1,0 +1,42 @@
+html, body {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important;
+}
+
+body {
+	background-image: linear-gradient(#fff, #eee);
+}
+
+p, li {
+	font-size: 14pt;
+}
+
+li {
+	line-height: 200% !important;
+}
+
+h1 {
+	font-size: 64pt !important;
+	line-height: 100% !important;
+	margin-bottom: .8em !important;
+	margin-top: 2em !important;
+}
+
+.btn {
+	padding: 1em 2em !important;
+}
+
+.btn-primary {
+	background-color: #00259e !important;
+}
+
+#logo-container {
+	margin-top: 1em;
+	height: 150px;
+	width: 150px;
+	float-right: 3em;
+}
+
+#logo {
+	height: 150px;
+	width: 150px;
+}

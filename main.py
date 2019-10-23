@@ -11,9 +11,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=365)
 
-
-@app.route("/")
-def index():
+@app.route("/profile")
+def profile():
     print("on / {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
         u = User(session['user'])
@@ -22,7 +21,7 @@ def index():
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
         email, img, name = data['email'], data['picture'], data['name']
-        return render_template('index.html', email=email, img=img, name=name)
+        return render_template('profile.html', email=email, img=img, name=name)
     else:
         redirect_response = request.url
         if request.args.get('state') not in ('', None):
@@ -45,14 +44,18 @@ def index():
             session['user'] = u.json()
             session['logged_in'] = True
             session.modified = True
-            return redirect('/')
+            return redirect('/process')
         else:
             return redirect('/login')
+
+@app.route("/")
+def index():
+    return render_template('index.html')
 
 @app.route("/login")
 def login():
     print("on /login {}".format(session))
-    session['redirect_uri'] = request.url_root.rstrip('/login')
+    session['redirect_uri'] = request.url_root.rstrip('/login') + '/profile'
     session.modified = True
     google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
     # Redirect user to Google for authorization
@@ -88,7 +91,7 @@ def process():
         flash('Success', 'success')
     session['user'] = u.json() 
     session.modified = True
-    return redirect(url_for('index'))
+    return redirect(url_for('profile'))
 
 
 @app.route('/clear')

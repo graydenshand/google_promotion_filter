@@ -1,66 +1,53 @@
-<html style='height: 100vh'>
-<head>
-    <meta charset="utf-8">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% extends 'base.html' %}
 
-    <!-- Google Analytics - 98 Voices -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150547603-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-150547603-1');
-    </script>
-
-    <title>98 Voices</title>
-</head>
-<body style='height: 100%'>
-    <div class='container'>
-    </div>
-    <div class='container' style='display: flex; justify-content: center; align-items: center; height: 100vh'>
-        <div class='card col-sm-6' style='vertical-align: middle; height: auto;'>  
-            <div class='card-body'>
-                {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class='alert alert-{{category}} alert-dismissible fade show'>
-                    {{message}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-                <div class='text-center'>
-                    <img src="{{img}}" style='display: inline; width:100; margin-bottom: 2em; border-radius: 50%;'/>
-                    <h4>{{name | upper}}</h4>
-                    <p class='lead'>{{email | lower}}</p>
-                    <a href='/process' class='card-link' id='link'>Go</a>
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-3'>
+            <div class='float-right' id='logo-container'>
+                <div>
+                    <img src="https://static.thenounproject.com/png/1014898-200.png" id='logo'>
+                    <p class='text-sm text-muted text-center' style='margin-top: -15px;'>98 Voices</p>
                 </div>
             </div>
         </div>
+        <div class='col-sm-6'>
+            <h1>Fixing the Google promo folder</h1>
+            <p>It’s a miracle, of course. There are 51,000 unread emails in my promo folder, and 98% of them are unread for a reason. Because I didn’t ask for them and I don’t care what they say.</p>
+
+            <p>But the other 2%? I miss reading those.</p>
+
+            <p>These are the emails from Gretchen, from Tim, from TED. They’re the emails from Sarah Jones, from BoingBoing and from charity:water. These are the blogs and the updates and the announcements that are very definitely NOT promotions. They’re anticipated, personal and relevant messages, delivered with permission.</p>
+
+            <p>Google has business reasons to quarantine notes like this, but it’s not the right thing to do. And we now have a way to fix it.</p>
+
+            <p>A simple button, with just a few clicks, will automatically create a safe place for 98 voices, moving them (past and future) from your promo folder back to your inbox. And it’s easy to undo–if any sender gets annoying, a simple edit of your filters and they’re gone again.</p>
+
+            <p>TED, Oprah, Sarah Jones, Adam Grant, Dan Pink, BoingBoing… all your favorites, unblocked! Fix the promo folder. Authenticate your gmail account and you’re done.</p>
+
+            <p>Everyone on the list will be pointing to the button, and if we coordinate our outreach well, readers who were previously lost forever to the unfairness of Google’s whims will be back where they belong.</p>
+            </p>
+            <p class='text-right text-muted lead'>- Seth Godin</p>
+        </div>
+        <div class='col-sm-3'></div>
     </div>
-
-    <script type="text/javascript">
-        let link = document.querySelector('#link')
-        var spinner = function() {
-            var card = link.parentElement.parentElement;
-            const div = document.createElement('div');
-            div.setAttribute('class', 'd-flex justify-content-center')
-            const spinner = document.createElement('div');
-            spinner.setAttribute('class', 'spinner-border text-center');
-            spinner.setAttribute('role', 'status');
-            spinner.innerHTML = "<span class='sr-only'>Loading...</span>"
-            div.appendChild(spinner)
-            card.appendChild(div)
-            gtag('event','filter_applied') // log click as goal/event google analytics
-        }
-
-        link.addEventListener('click', spinner);
-    </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+    <div class='row'>
+        <div class='col-sm-3'></div>
+        <div class='col-sm-6'>
+            <h2>Here's how it works</h2>
+            <ol>
+                <strong>
+                    <li>Sign in with google</li>
+                    <li>Give us permission to modify your settings</li>
+                </strong>
+            </ol>
+            <p>Sign in with your google account and we'll create a mail filter that will keep this mail out of your promotions folder.</p>
+            <div class="text-center">
+                <a class='btn btn-primary' href="/profile">Go</a>
+            </div>
+        </div>
+        <div class='col-sm-3'></div>
+    </div>
+    <br>
+</div>
+{% endblock %}
