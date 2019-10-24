@@ -21,6 +21,7 @@ def profile():
         if data == 'refresh_error': # token refresh error
             session['logged_in'] = False
             session.modified = True
+            print('refresh error')
             return redirect('/login')
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
