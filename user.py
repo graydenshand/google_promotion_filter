@@ -41,7 +41,9 @@ class User():
             self._name = data['name']
             self._created_at = datetime.fromtimestamp(data['created_at'])
             if self.token()['expires_at'] < time() + 10:
-                self.refresh_token()
+                google = self.refresh_token()
+                if google == 'refresh_error':
+                    return 'refresh_error'
             self._filter_id = data['filter_id']
 
     def __repr__(self):
@@ -113,6 +115,8 @@ class User():
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         headers = {"Content-Type": "application/json"}
         params = {
             "criteria": {
@@ -142,7 +146,7 @@ class User():
                 print(r.status_code, r.text)
                 return False
         else:
-            # TODO -- error handling
+            # TODO -- refresh_error handling
             print(r.text, r.status_code)
             return False
 
@@ -152,14 +156,24 @@ class User():
             'client_id': client_id,
             'client_secret': client_secret,
         }
-        self.set_token(google.refresh_token(refresh_url, **extra))
-        print('token updated!')
-        return google
+        if 'refresh_token' in self.token().keys():
+            try:
+                self.set_token(google.refresh_token(refresh_url, **extra))
+                print('token updated!')
+                return google
+            except Exception as e:
+                print(e)
+                return 'refresh_error'
+        else:
+            return 'refresh_error'
 
     def user_info(self, wait_time=1):
         google = OAuth2Session(client_id, token=self.token())
+        self._token['expires_at'] = time() - 10
         if self.token()['expires_at'] < time() + 10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
         if r.status_code == 200:
             data = r.json()
@@ -203,6 +217,8 @@ class User():
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=CATEGORY_PROMOTIONS")
 
         if str(r.status_code)[0] == '2':
@@ -224,6 +240,8 @@ class User():
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages/{}".format(message_id))
         
         if str(r.status_code)[0] == '2':
@@ -245,6 +263,8 @@ class User():
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         params = {"removeLabelIds": ['CATEGORY_PROMOTIONS'], "addLabelIds": ['CATEGORY_PERSONAL']}
         headers = {"Content-Type": "application/json"}
         r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
@@ -289,6 +309,8 @@ class User():
         google = OAuth2Session(client_id, token=self.token())
         if self.token()['expires_at'] < time()+10:
             google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
         url = "https://www.googleapis.com/gmail/v1/users/me/settings/filters/{}".format(self.filter_id())
         r = google.delete(url)
         if str(r.status_code)[0] == '2':

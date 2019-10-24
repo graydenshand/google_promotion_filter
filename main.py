@@ -13,11 +13,15 @@ app.permanent_session_lifetime = timedelta(days=365)
 
 @app.route("/profile")
 def profile():
-    print("on / {}".format(session))
+    print("on /profile {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
         u = User(session['user'])
         #u.get_by_email(u.email()) # refresh data
         data = u.user_info()
+        if data == 'refresh_error': # token refresh error
+            session['logged_in'] = False
+            session.modified = True
+            return redirect('/login')
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
         email, img, name = data['email'], data['picture'], data['name']
@@ -40,6 +44,7 @@ def profile():
                     print('failed to create new user')
                     abort(500)
             u.set_token(token)
+            print('token set')
 
             session['user'] = u.json()
             session['logged_in'] = True
@@ -75,19 +80,12 @@ def process():
     if u.filter_made() == True:
         flash('Your inbox filter has already been created', 'info')
     else:
-        """
-        result1 = u.clear_promo_folder()
-        if result1 == True:
-            result2 = u.make_filter()
-            if result2 == True:
-                flash('Success', 'success')
-            else:
-                flash('Error making filter', 'danger')
-        else:
-            flash('Error cleaning promo folder', 'danger')
-        """
-        #job = q.enqueue(process_user, u.json())
-        job_id = u.make_filter()
+        result = u.make_filter()
+        if result == 'refresh_error':
+            flash('We had trouble verifying your Google credentials, please try again', 'warning')
+            session['logged_in'] = False
+            session.modified = True
+            return redirect('/')
         flash('Success', 'success')
     session['user'] = u.json() 
     session.modified = True
@@ -99,13 +97,6 @@ def clear():
     print("on /clear {}".format(session))
     session.clear()
     session.modified = True
-    return redirect('/')
-
-@app.route('/test')
-def test():
-    print("on /test {}".format(session))
-    print(query())
-    job = q.enqueue(query)
     return redirect('/')
 
 
