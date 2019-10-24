@@ -162,14 +162,13 @@ class User():
                 print('token updated!')
                 return google
             except Exception as e:
-                print(e)
+                print('Error: ', e)
                 return 'refresh_error'
         else:
             return 'refresh_error'
 
     def user_info(self, wait_time=1):
         google = OAuth2Session(client_id, token=self.token())
-        self._token['expires_at'] = time() - 10
         if self.token()['expires_at'] < time() + 10:
             google = self.refresh_token()
             if google == 'refresh_error':
