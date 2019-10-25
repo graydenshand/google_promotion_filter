@@ -29,9 +29,26 @@ p, li, a {
 	margin-top: 2em;
 }
 
-@media only screen and (max-width: 500px) {
+#bootstrap_override #mobile_nav {
+	display: none;
+}
+
+@media only screen and (max-width: 575px) {
 	#bootstrap_override h1 {
-		margin-top: 0;
+		margin-top: 1em;
+		font-size: 48pt;
+	}
+
+	#bootstrap_override #desktop_nav {
+		display: none;
+	}
+
+	#bootstrap_override #mobile_nav {
+		display: flex;
+	}
+
+	#bootstrap_override .card-text {
+		width: 100%;
 	}
 }
 

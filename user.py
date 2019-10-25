@@ -366,7 +366,7 @@ if __name__=='__main__':
 
     u.get_by_email('graydenshand@gmail.com')
     print(u.json())
-    print(u.delete_filter())
+    #print(u.delete_filter())
     print(u.make_filter())
 
 

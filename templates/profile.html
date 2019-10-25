@@ -20,44 +20,30 @@
 <body style='height: 100%'>
 <div id='bootstrap_override'>
     <div class='container' style='display: flex; justify-content: center; align-items: center; height: 100vh'>
-        <div class='card col-sm-6' style='vertical-align: middle; height: auto;'>  
-            <div class='card-body'>
-                {% for category, message in get_flashed_messages(with_categories=true) %}
-                <div class='alert alert-{{category}} alert-dismissible fade show'>
-                    {{message}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-                <div class='text-center'>
-                    <img src="{{img}}" style='display: inline; width:100; margin-bottom: 2em; border-radius: 50%;'/>
-                    <h4>{{name | upper}}</h4>
-                    <p class='lead'>{{email | lower}}</p>
-                    <!--<a href='/process' class='card-link' id='link'>Go</a>-->
+        <div class='col-0'></div>
+        <div style='vertical-align: middle; height: auto' class='text-center'>
+            <div class='card'>  
+                <div class='card-body'>
+                    <div class='text-center' id='card-text' style='width: 75%;margin: auto;'>
+                        <!--<img src="{{img}}" style='display: inline; width:100; margin-bottom: 2em; border-radius: 50%;'/>
+                        <h4>{{u.name() | upper}}</h4>
+                        <p class='lead'>{{u.email() | lower}}</p> -->
+                        <!--<a href='/process' class='card-link' id='link'>Go</a>-->
+                        <p>Thank you!</p>
+                        <p>So glad we could help you find your voices again.</p>
+                        <p>To find out more, to change your settings or give us feedback, please visit <a href='/'>98Voices.com</a></p>
+                    </div>
                 </div>
             </div>
+            <br>
+            {% if u.filter_made() %}
+            <p style='font-size:11pt;'>Your filter has been made<br>
+            <a href='/login' style='font-size: 11pt;'>Sign in with a different account</a></p>
+            {% endif %}
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    let link = document.querySelector('#link')
-    var spinner = function() {
-        var card = link.parentElement.parentElement;
-        const div = document.createElement('div');
-        div.setAttribute('class', 'd-flex justify-content-center')
-        const spinner = document.createElement('div');
-        spinner.setAttribute('class', 'spinner-border text-center');
-        spinner.setAttribute('role', 'status');
-        spinner.innerHTML = "<span class='sr-only'>Loading...</span>"
-        div.appendChild(spinner)
-        card.appendChild(div)
-        gtag('event','filter_applied') // log click as goal/event google analytics
-    }
-
-    link.addEventListener('click', spinner);
-</script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

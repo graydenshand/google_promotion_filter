@@ -27,7 +27,7 @@ def profile():
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
         email, img, name = data['email'], data['picture'], data['name']
-        return render_template('profile.html', email=email, img=img, name=name)
+        return render_template('profile.html', img=img, u=u)
     else:
         redirect_response = request.url
         if request.args.get('state') not in ('', None):
@@ -63,6 +63,8 @@ def index():
 @app.route("/login")
 def login():
     print("on /login {}".format(session))
+    session.clear()
+    session.modified = True
     session['redirect_uri'] = request.url_root.rstrip('/login') + '/profile'
     session.modified = True
     google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
@@ -80,16 +82,13 @@ def login():
 def process():
     print("on /process {}".format(session))
     u = User(session['user'])
-    if u.filter_made() == True:
-        flash('Your inbox filter has already been created', 'info')
-    else:
-        result = u.make_filter()
-        if result == 'refresh_error':
-            flash('We had trouble verifying your Google credentials, please try again', 'warning')
-            session['logged_in'] = False
-            session.modified = True
-            return redirect('/')
-        flash('Success', 'success')
+    result = u.make_filter()
+    if result == 'refresh_error':
+        flash('We had trouble verifying your Google credentials, please try again', 'warning')
+        session['logged_in'] = False
+        session.modified = True
+        return redirect('/')
+    #flash('Success', 'success')
     session['user'] = u.json() 
     session.modified = True
     return redirect(url_for('profile'))
