@@ -44,7 +44,7 @@ def profile():
                 if u.create(email, name) == False:
                     print('failed to create new user')
                     abort(500)
-            u.set_token(token)
+                u.set_token(token)
             print('token set')
 
             session['user'] = u.json()
