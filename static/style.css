@@ -39,6 +39,12 @@ p, li, a {
 
 #bootstrap_override .btn-primary {
 	background-color: #00259e;
+	color: #fff;
+	font-weight: 400;
+}
+
+#bootstrap_override .btn-primary:hover {
+	text-decoration: none;
 }
 
 #logo-container {
