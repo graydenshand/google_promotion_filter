@@ -17,6 +17,7 @@ def profile():
     if 'logged_in' in session.keys() and session['logged_in'] == True:
         u = User(session['user'])
         #u.get_by_email(u.email()) # refresh data
+        u._token['expires_at'] = time()
         data = u.user_info()
         if data == 'refresh_error': # token refresh error
             session['logged_in'] = False
@@ -34,6 +35,7 @@ def profile():
             # Fetch the access token
             token = google.fetch_token(token_url, client_secret=client_secret,
                     authorization_response=redirect_response)
+            print(token)
             # Fetch a protected resource, i.e. user profile
             r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
             data = r.json()
@@ -44,7 +46,7 @@ def profile():
                 if u.create(email, name) == False:
                     print('failed to create new user')
                     abort(500)
-                u.set_token(token)
+            u.set_token(token)
             print('token set')
 
             session['user'] = u.json()

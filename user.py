@@ -40,10 +40,6 @@ class User():
             self._filter_made = data['filter_made']
             self._name = data['name']
             self._created_at = datetime.fromtimestamp(data['created_at'])
-            if self.token()['expires_at'] < time() + 10:
-                google = self.refresh_token()
-                if google == 'refresh_error':
-                    return 'refresh_error'
             self._filter_id = data['filter_id']
 
     def __repr__(self):
