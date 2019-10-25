@@ -16,8 +16,8 @@ def profile():
     print("on /profile {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
         u = User(session['user'])
-        #u.get_by_email(u.email()) # refresh data
-        u._token['expires_at'] = time()
+        u.get_by_email(u.email()) # refresh data
+        #u._token['expires_at'] = time()
         data = u.user_info()
         if data == 'refresh_error': # token refresh error
             session['logged_in'] = False

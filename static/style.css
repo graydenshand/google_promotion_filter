@@ -6,27 +6,39 @@ body {
 	background-image: linear-gradient(#fff, #eee);
 }
 
-p, li {
+p, li, a {
 	font-size: 14pt;
 }
 
-li {
-	line-height: 200% !important;
+#bootstrap_override a {
+	color: #00259e;
 }
 
-h1 {
-	font-size: 64pt !important;
-	line-height: 100% !important;
-	margin-bottom: .8em !important;
-	margin-top: 2em !important;
+#bootstrap_override a:hover {
+	text-decoration: underline;
 }
 
-.btn {
-	padding: 1em 2em !important;
+#bootstrap_override li {
+	line-height: 200%;
 }
 
-.btn-primary {
-	background-color: #00259e !important;
+#bootstrap_override h1 {
+	font-size: 64pt;
+	line-height: 100%;
+	margin-bottom: .8em;
+	margin-top: 2em;
+}
+
+#bootstrap_override h2 {
+	margin-top: 1.5em;
+}
+
+#bootstrap_override .btn {
+	padding: 1em 2em;
+}
+
+#bootstrap_override .btn-primary {
+	background-color: #00259e;
 }
 
 #logo-container {
@@ -34,6 +46,7 @@ h1 {
 	height: 150px;
 	width: 150px;
 	float-right: 3em;
+	margin-bottom: 2em;
 }
 
 #logo {
