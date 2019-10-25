@@ -29,6 +29,12 @@ p, li, a {
 	margin-top: 2em;
 }
 
+@media only screen and (max-width: 500px) {
+	#bootstrap_override h1 {
+		margin-top: 0;
+	}
+}
+
 #bootstrap_override h2 {
 	margin-top: 1.5em;
 }
@@ -48,14 +54,14 @@ p, li, a {
 }
 
 #logo-container {
-	margin-top: 1em;
-	height: 150px;
-	width: 150px;
+	margin-top: 2em;
+	height: 100px;
+	width: 100px;
 	float-right: 3em;
 	margin-bottom: 2em;
 }
 
 #logo {
-	height: 150px;
-	width: 150px;
+	height: 100px;
+	width: 100px;
 }
