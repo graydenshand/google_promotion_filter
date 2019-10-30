@@ -2,3 +2,4 @@ venv/
 __pycache__/
 google_oauth.sublime-project 
 google_oauth.sublime-workspace
+.DS_Store

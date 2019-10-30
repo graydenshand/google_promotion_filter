@@ -4,35 +4,25 @@
 <div id='bootstrap_override'>
     <div class='container'>
         <div class='row'>
-            <div class='col-sm-4 col-md-3' id='desktop_nav'>
+            <div class='col-sm-4 col-md-3' id='navbar'>
                 <div class='clearfix'>
                     <div class='float-right' id='logo-container'>
-                        <div style='height: 100px'>
+                        <div>
                             <img src="/static/img/98_logo.png" id='logo' alt='98 Voices'>
                         </div>
                     </div>
                 </div>
-                <p class='text-right'>
-                    <a class='nav-link' href="#how_it_works">How it works</a>
-                    <a class='nav-link' href="#get_started">Get started</a>
-                    <a class='nav-link' href="#undoing_the_app">Undoing the app</a>
-                    <a class='nav-link' href="#why_were_doing_this">Why we're doing this</a>
-                </p>
-            </div>
-            <div class='col-sm-4 col-md-3' id='mobile_nav'>
-                <div class='clearfix'>
-                    <div class='float-right' id='logo-container'>
-                        <div style='height: 100px'>
-                            <img src="/static/img/98_logo.png" id='logo' alt='98 Voices'>
-                        </div>
+                <div class='nav-container text-right w-100'>
+                    <div class='text-right w-100'>
+                        <svg id='nav-toggle' aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
                     </div>
+                    <p class='text-right w-100' id='nav'>
+                        <a class='nav-link' href="#how_it_works">How it works</a>
+                        <a class='nav-link' href="#get_started">Get started</a>
+                        <a class='nav-link' href="#undoing_the_app">Undoing the app</a>
+                        <a class='nav-link' href="#why_were_doing_this">Why we're doing this</a>
+                    </p>
                 </div>
-                <p class='text-right'>
-                    <a class='nav-link' href="#how_it_works">How it works</a>
-                    <a class='nav-link' href="#get_started">Get started</a>
-                    <a class='nav-link' href="#undoing_the_app">Undoing the app</a>
-                    <a class='nav-link' href="#why_were_doing_this">Why we're doing this</a>
-                </p>
             </div>
             <div class='col-sm-8 col-md-6'>
                 <h1>Fixing the Google promo folder</h1>
@@ -162,6 +152,18 @@
             let section = document.querySelector(id);
             section.scrollIntoView({behavior: 'smooth'});
         })
+    })
+</script>
+
+<script type="text/javascript">
+    $('#nav-toggle').click(function() {
+        var nav = document.querySelector('#nav')
+        var state = nav.style.display;
+        if (state == '' | state == 'none') {
+            $('#nav').slideDown(); 
+        } else {
+            $('#nav').slideUp();
+        }
     })
 </script>
 

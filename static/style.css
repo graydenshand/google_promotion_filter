@@ -33,23 +33,60 @@ p, li, a {
 	display: none;
 }
 
+#nav-toggle {
+	display: none;
+}
+
+#nav {
+	display: inline;
+}
+
 @media only screen and (max-width: 575px) {
 	#bootstrap_override h1 {
-		margin-top: 1em;
+		margin-top: .5em;
 		font-size: 48pt;
 	}
 
-	#bootstrap_override #desktop_nav {
+	#bootstrap_override #navbar {
+		display: flex;
+	}
+
+	#nav {
 		display: none;
 	}
 
-	#bootstrap_override #mobile_nav {
-		display: flex;
+	#bootstrap_override .nav-link {
+		padding: .5em 0;
+	}
+
+	#nav-toggle {
+		display: inline;
+		width: 40px;
+		margin-top: 2.1em;
+		border: 1px solid #222;
+		padding: 5px;
+		border-radius: 4px;
 	}
 
 	#bootstrap_override .card-text {
 		width: 100%;
 	}
+
+	#bootstrap_override .container {
+		padding: 0 2.5% !important;
+	}
+
+	#logo-container {
+		height: 50px !important;
+		width: 50px !important;
+		display: inline;
+	}
+
+	#logo {
+		height: 50px !important;
+		width: 50px !important;
+	}
+
 }
 
 #bootstrap_override h2 {
