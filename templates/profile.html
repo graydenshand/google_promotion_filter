@@ -33,9 +33,9 @@
             <br>
             {% if u.filter_made() %}
             <p style='font-size:11pt;'>Your filter has been made</p><br>
-            <a href='/logout?redirect=process' style='font-size: 11pt;'>Sign in with a different account</a></p>
+            <a href='/logout/process' style='font-size: 11pt;'>Sign in with a different account</a></p>
             {% else %}
-            <a href='/logout?redirect=undo' style='font-size: 11pt;'>Remove the filter from another account</a></p>
+            <a href='/logout/undo' style='font-size: 11pt;'>Remove the filter from another account</a></p>
             {% endif %}
         </div>
     </div>
