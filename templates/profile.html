@@ -25,16 +25,17 @@
             <div class='card'>  
                 <div class='card-body'>
                     <div class='text-center' id='card-text' style='width: 75%;margin: auto;'>
-                        <p>Thank you!</p>
-                        <p>So glad we could help you find your voices again.</p>
+                        {{ msg | safe }}
                         <p>To find out more, to change your settings or give us feedback, please visit <a href='/'>98Voices.com</a></p>
                     </div>
                 </div>
             </div>
             <br>
             {% if u.filter_made() %}
-            <p style='font-size:11pt;'>Your filter has been made<br>
-            <a href='/login' style='font-size: 11pt;'>Sign in with a different account</a></p>
+            <p style='font-size:11pt;'>Your filter has been made</p><br>
+            <a href='/logout?redirect=process' style='font-size: 11pt;'>Sign in with a different account</a></p>
+            {% else %}
+            <a href='/logout?redirect=undo' style='font-size: 11pt;'>Remove the filter from another account</a></p>
             {% endif %}
         </div>
     </div>

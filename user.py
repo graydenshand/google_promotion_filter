@@ -298,6 +298,41 @@ class User():
             t.start()
         return True
 
+    def _get_filter(self, wait_time=1):
+        if self.filter_id() is None:
+            raise Exception('Filter id not defined')
+        google = OAuth2Session(client_id, token=self.token())
+        if self.token()['expires_at'] < time()+10:
+            google = self.refresh_token()
+            if google == 'refresh_error':
+                return 'refresh_error'
+        url = "https://www.googleapis.com/gmail/v1/users/me/settings/filters/{}".format(self.filter_id())
+        r = google.get(url)
+        if str(r.status_code)[0] == '2':
+            return True
+        elif r.status_code == 429:
+            if wait_time <= 8:
+                sleep(wait_time)
+                return self._get_filter(wait_time*2)
+            else:
+                print(r.status_code, r.text)
+                return False
+        else:
+            print('Filter not found in user account')
+            self._reset_filter()
+            print(r.status_code, r.text)
+            return False
+
+    def _reset_filter(self, wait_time=1):
+        print('resetting user filter status in db')
+        db = Db()
+        sql = 'UPDATE participant set filter_made = %s, filter_id = %s where email = %s;'
+        data = [False, None, self.email()]
+        db.query(sql, data)
+        self._filter_id = None
+        self._filter_made = False
+        return True
+
     def delete_filter(self, wait_time=1):
         if self.filter_id() is None:
             raise Exception('Filter id not defined')
@@ -309,13 +344,7 @@ class User():
         url = "https://www.googleapis.com/gmail/v1/users/me/settings/filters/{}".format(self.filter_id())
         r = google.delete(url)
         if str(r.status_code)[0] == '2':
-            db = Db()
-            sql = 'UPDATE participant set filter_made = %s, filter_id = %s where email = %s;'
-            data = [False, None, self.email()]
-            db.query(sql, data)
-            self._filter_id = None
-            self._filter_made = False
-            return True
+            return self._reset_filter()
         elif r.status_code == 429:
             if wait_time <= 8:
                 sleep(wait_time)
@@ -324,6 +353,8 @@ class User():
                 print(r.status_code, r.text)
                 return False
         else:
+            if r.status_code == 404:
+                return self._reset_filter()
             print(r.status_code, r.text)
             return False
         
@@ -366,8 +397,9 @@ if __name__=='__main__':
 
     u.get_by_email('graydenshand@gmail.com')
     print(u.json())
+    print(u._get_filter())
     #print(u.delete_filter())
-    print(u.make_filter())
+    #print(u.make_filter())
 
 
 

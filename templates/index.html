@@ -2,6 +2,11 @@
 
 {% block content %}
 <div id='bootstrap_override'>
+    <div class='flashed_messages'>
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class='alert alert-{{category}}'>{{message}}</div>
+        {% endfor %}
+    </div>
     <div class='container'>
         <div class='row'>
             <div class='col-sm-4 col-md-3' id='navbar'>
@@ -26,7 +31,7 @@
             </div>
             <div class='col-sm-8 col-md-6'>
                 <h1>Fixing the Google promo folder</h1>
-                <p>It’s a miracle, of course. There are 51,000 unread emails in my promo folder, and 98% of them are unread for a reason. Because I didn’t ask for them and I don’t care what they say.</p>
+                <p>It’s a miracle, of course. There are 51,000 unread emails in my promo folder, and 95% of them are unread for a reason. Because I didn’t ask for them and I don’t care what they say.</p>
 
                 <p>But the other 2%? I miss reading those.</p>
 
@@ -34,13 +39,12 @@
 
                 <p>Google has business reasons to quarantine notes like this, but it’s not the right thing to do. And we now have a way to fix it.</p>
 
-                <p>A simple button, with just a few clicks, will automatically create a safe place for 98 voices, moving them (past and future) from your promo folder back to your inbox. And it’s easy to undo–if any sender gets annoying, a simple edit of your filters and they’re gone again.</p>
+                <p>A simple button, with just a few clicks, will automatically create a safe place for 98 voices, moving them, starting today, from your promo folder back to your inbox. And it’s <a href='#undoing_the_app'>easy to undo</a> &mdash; if any sender gets annoying, you can simply unsubscribe from them.</p>
 
                 <p>TED, Oprah, Sarah Jones, Adam Grant, Dan Pink, BoingBoing… all your favorites, unblocked! Fix the promo folder. Authenticate your gmail account and you’re done.</p>
 
                 <p>Everyone on the list will be pointing to the button, and if we coordinate our outreach well, readers who were previously lost forever to the unfairness of Google’s whims will be back where they belong.</p>
                 </p>
-                <p class='text-right text-muted lead'>- Seth Godin</p>
             </div>
             <div class='col-md-3'></div>
         </div>
@@ -51,9 +55,13 @@
                 <h2>Here's how it works</h2>
                 <p>We’ve built a tiny free app that creates a filter in your gmail account (it only works with gmail, but it works on any browser and on your smartphone as well).</p>
 
-                <p>Once you authenticate the app (<a href='#get_started'>see here for screenshots</a>), it creates a filter that will stop Gmail categorizing messages from the 98 voices as promotions. <b>NOTE! If you have never subscribed to someone, this app won’t change anything--you’re not signing up to hear from people, you’re signing up to have Google stop filtering the emails you’ve already asked for.</b></p>
+                <p>Once you authenticate the app (<a href='#get_started'>see here for screenshots</a>), it creates a filter that will stop Gmail categorizing messages from the 98 voices as promotions.</p>
 
-                <p>It’s worth noting that we are never going to send you an email, and are never going to rent or sell your email address. Using this app won’t create any new emails in your box, and if you ever decide you want something back in the promo folder, all you need to do is turn the filter off.</p>
+                <div class='callout'>
+                    <p>NOTE! Fixing the promo folder won't subscribe you to any new emails. The only thing it does is stop Google from removing emails you want.</p>
+                </div>
+
+                <p>Installing the app doesn't sign you up for any newsletters, promos or other email other than rare technical notes about how the app works.</p>
             </div>
             <div class='col-md-3'></div>
         </div>
@@ -64,11 +72,11 @@
                 <h2>Get started</h2>
                 <p>Just click the button. Google will then present you with two or three dialogue boxes you need to check to confirm you want to use it. That’s it.</p>
 
-                <p>It won’t slow down your computer and you’ll never have to do anything again. We’ve posted our code on Github so you can see exactly what it does. Even though Google says that the app can view and modify your mail, it doesn’t. All it does is create a bunch of filters.</p>
+                <p>It won’t slow down your computer. We’ve posted our code on Github so you can see exactly what it does. Even though Google says that the app can view and modify your mail, it doesn’t. All it does is create a bunch of filters that tell Google to put the emails back where they belong.</p>
 
                 <p>Here are the windows you’ll see:</p>
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div id='screenshots' class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -105,7 +113,7 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <a class='btn btn-primary w-100' href="/profile">Go</a>
+                    <a class='btn btn-primary w-100' href="/process">Go</a>
                 </div>
             </div>
             <div class='col-md-3'></div>
@@ -115,7 +123,8 @@
             <div class='col-sm-4 col-md-3'></div>
             <div class='col-sm-8 col-md-6'>
                 <h2>Undoing the app</h2>
-                <p>It’s simple. Just go to your <a target="_new" href="https://mail.google.com/mail/u/0/#settings/filters">Gmail settings</a> and delete the filter. You can also edit the filter and remove names individually. </p>
+                <p>It’s simple. Just click below, sign in, and we'll remove the filter. You can also edit the filter and remove names individually.</p>
+                <a class='btn btn-secondary w-100' style='color: white;' href='/undo'>Remove Filter</a>
             </div>
             <div class='col-md-3'></div>
         </div>
@@ -131,7 +140,7 @@
 
                 <p>We don’t think it benefits you to have the messages you want to get stolen from your inbox and moved to a place where you can’t see them. And we know it’s a problem for people and organizations that want to create useful content, because if they’re not reaching their audience, it’s hard for them to keep making the work that matters.</p>
 
-                <p>If you’ve got feedback for us, please visit <a href='https://docs.google.com/forms/d/e/1FAIpQLSeHxNGD7LEqBD_msBK4AFqfbPjrZsLK5BM6Dl2Yj0NU6l1ZBA/viewform' target="_new">this simple form</a>. We’d love to hear about other voices you’d like added to the gold list as well.</p>
+                <p>If you’ve got feedback for us, please visit <a href='https://docs.google.com/forms/d/e/1FAIpQLSeHxNGD7LEqBD_msBK4AFqfbPjrZsLK5BM6Dl2Yj0NU6l1ZBA/viewform' target="_new">this simple form</a>. We’d love to hear about other voices you’d like added to the list of 98 Voices as well.</p>
 
             </div>
             <div class='col-md-3'></div>

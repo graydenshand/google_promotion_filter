@@ -15,19 +15,13 @@ app.permanent_session_lifetime = timedelta(days=365)
 def profile():
     print("on /profile {}".format(session))
     if 'logged_in' in session.keys() and session['logged_in'] == True:
+        msg = request.args.get('msg')
         u = User(session['user'])
         u.get_by_email(u.email()) # refresh data
         #u._token['expires_at'] = time()
-        data = u.user_info()
-        if data == 'refresh_error': # token refresh error
-            session['logged_in'] = False
-            session.modified = True
-            print('refresh error')
-            return redirect('/login')
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
-        email, img, name = data['email'], data['picture'], data['name']
-        return render_template('profile.html', img=img, u=u)
+        return render_template('profile.html', u=u, msg=msg)
     else:
         redirect_response = request.url
         if request.args.get('state') not in ('', None):
@@ -60,11 +54,24 @@ def profile():
 def index():
     return render_template('index.html')
 
+@app.route('/undo')
+def remove_filter():
+    session['remove_filter'] = True
+    session.modified == True
+    if 'logged_in' in session.keys() and session['logged_in'] == True:
+        return redirect('/process')
+    else:
+        return redirect('/login')
+
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    session.modified = True
+    return redirect('/login')
+
 @app.route("/login")
 def login():
     print("on /login {}".format(session))
-    session.clear()
-    session.modified = True
     session['redirect_uri'] = request.url_root.rstrip('/login') + '/profile'
     session.modified = True
     google = OAuth2Session(client_id, scope=scope, redirect_uri=session['redirect_uri'])
@@ -81,17 +88,46 @@ def login():
 @app.route('/process')
 def process():
     print("on /process {}".format(session))
+    if 'logged_in' not in session.keys() or session['logged_in'] != True:
+        return redirect('/login')
     u = User(session['user'])
-    result = u.make_filter()
-    if result == 'refresh_error':
-        flash('We had trouble verifying your Google credentials, please try again', 'warning')
-        session['logged_in'] = False
+    if 'remove_filter' not in session.keys():
+        result = u.make_filter()
+        if result == 'refresh_error':
+            flash('We had trouble verifying your Google credentials, please try again', 'warning')
+            session['logged_in'] = False
+            session.modified = True
+            return redirect('/')
+        session['user'] = u.json() 
         session.modified = True
-        return redirect('/')
-    #flash('Success', 'success')
-    session['user'] = u.json() 
-    session.modified = True
-    return redirect(url_for('profile'))
+        msg = '''<p>Thank you!</p>
+        <p>So glad we could help you find your voices again.</p>
+        '''
+        return redirect(url_for('profile', msg=msg))
+    else:
+        if u.filter_id() is None:
+            session.pop('remove_filter')
+            session.modified = True
+            flash("Your filter hasn't been created yet.", 'warning')
+            return redirect('/')
+
+        result = u.delete_filter()
+        if result == 'refresh_error':
+            flash('We had trouble verifying your Google credentials, please try again', 'warning')
+            session['logged_in'] = False
+            session.modified = True
+            return redirect('/')
+        elif result == True:
+            msg = '''
+            <p>All set, your filter has been removed.</p>
+            '''
+            session.pop('remove_filter')
+            session.modified = True
+            return redirect(url_for('profile', msg=msg))
+        else:
+            flash('There was an unexpected error when trying to delete your inbox filter.', 'danger')
+            return redirect('/')
+
 
 
 @app.route('/clear')

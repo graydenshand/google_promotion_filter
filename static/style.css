@@ -1,5 +1,5 @@
 html, body {
-	font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important;
+	font-family: 'Open Sans' sans-serif !important;
 }
 
 body {
@@ -8,6 +8,10 @@ body {
 
 p, li, a {
 	font-size: 14pt;
+}
+
+p {
+	line-height: 1.3em;
 }
 
 #bootstrap_override a {
@@ -45,6 +49,24 @@ p, li, a {
 	padding: .5em 0;
 }
 
+.callout {
+	border: 2px solid #00259e;
+	border-radius: 4px;
+	padding: 1em;
+	margin: 2em 0;
+}
+
+.callout p {
+	font-weight: 500;
+	margin: 0;
+}
+
+#screenshots {
+	width: 150%; 
+	position: relative; 
+	right: 25%;
+}
+
 @media only screen and (max-width: 575px) {
 	#bootstrap_override h1 {
 		margin-top: .5em;
@@ -57,6 +79,11 @@ p, li, a {
 
 	#nav {
 		display: none;
+	}
+
+	#screenshots {
+		width: 100%;
+		right: 0;
 	}
 
 
@@ -104,8 +131,12 @@ p, li, a {
 	font-weight: 400;
 }
 
-#bootstrap_override .btn-primary:hover {
+#bootstrap_override .btn:hover {
 	text-decoration: none;
+}
+
+#bootstrap_override .btn-primary:hover {
+	background-color: #001e82;
 }
 
 #logo-container {
