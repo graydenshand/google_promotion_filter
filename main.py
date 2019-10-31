@@ -64,7 +64,7 @@ def remove_filter():
         return redirect('/login')
 
 @app.route('/logout/<redirect>')
-def logout():
+def logout(redirect=''):
     session['logged_in'] = False
     session.modified = True
     return redirect(f'/{redirect}')
