@@ -2,36 +2,41 @@
 
 {% block content %}
 <div id='bootstrap_override'>
+    <div class='container-fluid'>
+        <nav class='navbar navbar-light navbar-expand-lg'>
+            <div class='navbar-brand'>
+                <img src="/static/img/98_logo.png" id='logo'>
+            </div>
+
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+            <div class="collapse navbar-collapse" id="nav" class="navbar-nav mr-auto" style="justify-content: right;">
+                <a class='nav-link text-right' href="#how_it_works">How it works</a>
+                <a class='nav-link text-right' href="#get_started">Get started</a>
+                <a class='nav-link text-right' href="#undoing_the_app">Undoing the app</a>
+                <a class='nav-link text-right' href="#why_were_doing_this">Why we're doing this</a>
+            </div>
+        </nav>
+    </div>
     <div class='flashed_messages'>
         {% for category, message in get_flashed_messages(with_categories=True) %}
         <div class='alert alert-{{category}}'>{{message}}</div>
         {% endfor %}
     </div>
+    <img src="/static/img/headshots.png" class="w-100" id='headshots'>
+    <img src="/static/img/headshots_mobile.png" class="w-100" id='headshots_mobile'>
+    <div style='width: 100%; margin: auto;'>
+        <h1 class='text-center w-100'>98 Voices</h1>
+    </div>
     <div class='container'>
         <div class='row'>
-            <div class='col-sm-4 col-md-3' id='navbar'>
-                <div class='clearfix'>
-                    <div class='float-right' id='logo-container'>
-                        <div>
-                            <img src="/static/img/98_logo.png" id='logo' alt='98 Voices'>
-                        </div>
-                    </div>
-                </div>
-                <div class='nav-container text-right w-100'>
-                    <div class='text-right w-100'>
-                        <svg id='nav-toggle' aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
-                    </div>
-                    <p class='text-right w-100' id='nav'>
-                        <a class='nav-link' href="#how_it_works">How it works</a>
-                        <a class='nav-link' href="#get_started">Get started</a>
-                        <a class='nav-link' href="#undoing_the_app">Undoing the app</a>
-                        <a class='nav-link' href="#why_were_doing_this">Why we're doing this</a>
-                    </p>
-                </div>
+            <div class='col-sm-1 col-md-2 col-lg-3'>
             </div>
-            <div class='col-sm-8 col-md-6'>
-                <h1>Fixing the Google promo folder</h1>
-                <p>It’s a miracle, of course. There are 51,000 unread emails in my promo folder, and 95% of them are unread for a reason. Because I didn’t ask for them and I don’t care what they say.</p>
+            <div class='col-sm-10 col-md-8 col-lg-6'>
+                <h2>Fixing the Google promo folder</h2>
+                <p>It's a miracle, of course. There are 51,000 unread emails in my promo folder, and 95% of them are unread for a reason. Because I didn’t ask for them and I don’t care what they say.</p>
 
                 <p>But the other 2%? I miss reading those.</p>
 
@@ -46,93 +51,65 @@
                 <p>Everyone on the list will be pointing to the button, and if we coordinate our outreach well, readers who were previously lost forever to the unfairness of Google’s whims will be back where they belong.</p>
                 </p>
             </div>
-            <div class='col-md-3'></div>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
         
         <div class='row' id="how_it_works">
-            <div class='col-sm-4 col-md-3'></div>
-            <div class='col-sm-8 col-md-6'>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
+            <div class='col-sm-10 col-md-8 col-lg-6'>
                 <h2>Here's how it works</h2>
                 <p>We’ve built a tiny free app that creates a filter in your gmail account (it only works with gmail, but it works on any browser and on your smartphone as well).</p>
 
                 <p>Once you authenticate the app (<a href='#get_started'>see here for screenshots</a>), it creates a filter that will stop Gmail categorizing messages from the 98 voices as promotions.</p>
-
                 <div class='callout'>
                     <p>NOTE! Fixing the promo folder won't subscribe you to any new emails. The only thing it does is stop Google from removing emails you want.</p>
                 </div>
 
                 <p>Installing the app doesn't sign you up for any newsletters, promos or other email other than rare technical notes about how the app works.</p>
             </div>
-            <div class='col-md-3'></div>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
 
         <div class='row' id="get_started">
-            <div class='col-sm-4 col-md-3'></div>
-            <div class='col-sm-8 col-md-6'>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
+            <div class='col-sm-10 col-md-8 col-lg-6'>
                 <h2>Get started</h2>
                 <p>Just click the button. Google will then present you with two or three dialogue boxes you need to check to confirm you want to use it. That’s it.</p>
+
+                <div class="text-center">
+                    <a class='btn btn-primary w-100' href="/process">Go</a>
+                </div>
 
                 <p>It won’t slow down your computer. We’ve posted our code on Github so you can see exactly what it does. Even though Google says that the app can view and modify your mail, it doesn’t. All it does is create a bunch of filters that tell Google to put the emails back where they belong.</p>
 
                 <p>Here are the windows you’ll see:</p>
 
-                <div id='screenshots' class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="/static/img/step1.png" class="d-block w-100" alt="Step One">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>First</h5>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/static/img/step2.png" class="d-block w-100" alt="Step Two">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>Second</h5>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/static/img/step3.png" class="d-block w-100" alt="Step 3">
-                        <div class="carousel-caption d-none d-md-block">
-                          <h5>Third</h5>
-                        </div>
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-                <br>
-                <div class="text-center">
-                    <a class='btn btn-primary w-100' href="/process">Go</a>
+                <div id='screenshots' class='row'>
+                    <div class='col-6'>
+                        <img src="/static/img/step1.png" alt="Step One"> 
+                        <img src="/static/img/step2.png" alt="Step Two">
+                    </div> 
+                    <div class='col-6'>
+                        <img src="/static/img/step3.png" alt="Step 3">
+                    </div>   
                 </div>
             </div>
-            <div class='col-md-3'></div>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
 
         <div class='row' id="undoing_the_app">
-            <div class='col-sm-4 col-md-3'></div>
-            <div class='col-sm-8 col-md-6'>
+            <div class='col-sm-4 col-sm-1 col-md-2 col-lg-3'></div>
+            <div class='col-sm-10 col-md-8 col-lg-6'>
                 <h2>Undoing the app</h2>
-                <p>It’s simple. Just click below, sign in, and we'll remove the filter. You can also edit the filter and remove names individually.</p>
-                <a class='btn btn-secondary w-100' style='color: white;' href='/undo'>Remove Filter</a>
+                <p>It’s as easy to remove the filter as it is to create it. Click the button on <a href="/undo_instructions">this page</a>, sign in, and we'll remove the filter. You can also edit the filter and remove names individually in your <a href="https://mail.google.com/mail/u/0/#settings/filters">Gmail settings</a>.</p>
             </div>
-            <div class='col-md-3'></div>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
 
 
         <div class='row' id="why_were_doing_this">
-            <div class='col-sm-4 col-md-3'></div>
-            <div class='col-sm-8 col-md-6'>
+            <div class='col-sm-4 col-sm-1 col-md-2 col-lg-3'></div>
+            <div class='col-sm-10 col-md-8 col-lg-6'>
                 <h2>Why we're doing this</h2>
                 <p><a href='http://www.permission.com' target="_new">Permission marketing</a> is the privilege of delivering anticipated, personal and relevant messages to the people who want to get them. Akimbo’s founder, Seth Godin, wrote a book about this twenty years ago. Along the way, many marketers have abused the idea, and as a result, email marketing has, in the wrong hands, gotten annoying.</p>
 
@@ -143,7 +120,7 @@
                 <p>If you’ve got feedback for us, please visit <a href='https://docs.google.com/forms/d/e/1FAIpQLSeHxNGD7LEqBD_msBK4AFqfbPjrZsLK5BM6Dl2Yj0NU6l1ZBA/viewform' target="_new">this simple form</a>. We’d love to hear about other voices you’d like added to the list of 98 Voices as well.</p>
 
             </div>
-            <div class='col-md-3'></div>
+            <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
 
         <br>

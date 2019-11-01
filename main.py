@@ -18,7 +18,7 @@ def profile():
         msg = request.args.get('msg')
         u = User(session['user'])
         u.get_by_email(u.email()) # refresh data
-        #u._token['expires_at'] = time()
+        
         session['user'] = u.json() # save any updates to session cookie
         session.modified = True
         return render_template('profile.html', u=u, msg=msg)
@@ -62,6 +62,10 @@ def remove_filter():
         return redirect('/process')
     else:
         return redirect('/login')
+
+@app.route('/undo_instructions')
+def undo_instructions():
+    return render_template('undo_instructions.html')
 
 @app.route('/logout/')
 @app.route('/logout/<redirect_page>/')

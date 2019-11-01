@@ -25,7 +25,9 @@
             <div class='card'>  
                 <div class='card-body'>
                     <div class='text-center' id='card-text' style='width: 75%;margin: auto;'>
+                        {% if msg != none %}
                         {{ msg | safe }}
+                        {% endif %}
                         <p>To find out more, to change your settings or give us feedback, please visit <a href='/'>98Voices.com</a></p>
                     </div>
                 </div>
