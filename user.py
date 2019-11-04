@@ -290,7 +290,6 @@ if __name__=='__main__':
     #print(u.user_info())
 
     # set_token
-    #token = {'access_token': 'ya29.ImCbB7-RCXlnETExBv945_682oO2VYjxCWT0lsnGCZ30FsoqZkcYH27GdkMEwXCfW7QgSKpzxf-XLgGbY-3HidpCV17dE3KTxti_EgbMZSaFLst1XzZmeIN0aym9J0tIb1c', 'expires_at': 1571326376.8499131, 'expires_in': 3600, 'id_token': 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjNkYjNlZDZiOTU3NGVlM2ZjZDlmMTQ5ZTU5ZmYwZWVmNGY5MzIxNTMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1MTAyMzIyMzM3NTUtOXRldWdqNGRwODZnc2Y2NzU1MTFtZW52NWxubGJtYjkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1MTAyMzIyMzM3NTUtOXRldWdqNGRwODZnc2Y2NzU1MTFtZW52NWxubGJtYjkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDA0MTQ5OTU4NzM4NzI0MzUzOTQiLCJlbWFpbCI6ImdyYXlkZW5zaGFuZEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Im1BUGlVd0NvUUx4MDhuSmxwcU8wMXciLCJpYXQiOjE1NzEzMjI3NzYsImV4cCI6MTU3MTMyNjM3Nn0.zodpDP8UlpPlLPnNHRoOs6S47pPPCUYnETXbEuw64_kjkKvV-PWWhuNEBP-4kvZNT52712iIQ50VNJpeYbB2tD7Yd0R89eZwS8n7Z9YQPOjJ_o7sYJw57LSu7PEH3g3MquMLVry4Hh8Kd_uRuiqlFjjPJ5_x_HY-NshQTZf1R3bGTVnoEOHlyrJP0KQ8Xw3PiLJh_BnJo7xSKNI4ZB3Y2zTIxygzI57vOd0d-8GLOXNAObfvAtSJBIZznrF4MbWyxHSxzuVqXAeFTAHvgDQsiOHakXrWv4ZC77FVRMw7LGTUt6duhfyfub4pj6RtZIwVA6RVDm_1_m71wQOzr9FFTQ', 'refresh_token': '1/X2vsgWnYHG4Fzrfmqy_vK5azv8ZrCYqsdebWNjeqO1s', 'scope': ['https://www.googleapis.com/auth/userinfo.profile', 'openid', 'https://www.googleapis.com/auth/gmail.settings.basic', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/userinfo.email'], 'token_type': 'Bearer'}
     #u.get_by_email('graydenshand@gmail.com')
     #u.set_token(token)
     #u.get_by_email('graydenshand@gmail.com')
@@ -300,9 +299,6 @@ if __name__=='__main__':
     #u.get_by_email('graydenshand@gmail.com')
     #u.make_filter()
     #print(u.json())
-
-    #u.get_by_email('graydenshand@gmail.com')
-    #u.clear_promo_folder()
 
     #u.get_by_email('graydenshand@gmail.com')
     #print(u.json())
