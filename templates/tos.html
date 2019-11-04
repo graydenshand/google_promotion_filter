@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class='container-fluid'>
+    <nav class='navbar navbar-light navbar-expand-lg'>
+        <div class='navbar-brand'>
+            <img src="/static/img/98_logo.png" id='logo'>
+        </div>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+        <div class="collapse navbar-collapse" id="nav" class="navbar-nav mr-auto" style="justify-content: right;">
+            <a class='nav-link text-right' href="#how_it_works">How it works</a>
+            <a class='nav-link text-right' href="#get_started">Get started</a>
+            <a class='nav-link text-right' href="#why_were_doing_this">Why we're doing this</a>
+            <a class='text-right' href="/undo_instructions">Undoing the app</a>
+        </div>
+    </nav>
+</div>
+<div class='container'>
+	<div class='row'>
+	<div class='col-sm-3'></div>
+	<div class='col-sm-6'>
+		<h1>Terms of Service</h1>
+
+		<p>Here are our terms of service (TOS):</p>
+		    <li>Use your best judgment.</li>
+		    <li>Be kind.</li>
+		    <li>No pitches outside the #pitches channel.</li>
+		    <li>Don’t post anything confidential, and, at the same time, please respect confidences here. Don’t share anything you learn here outside of the site without asking the person you’re quoting first.</li>
+		    <li>Avoid hot button issues. There are excellent places for those conversations, but this isn’t one of them. They simply allow us to hide from our real work.</li>
+
+		<p>We’ll do our best to reach out to people who are out of sync with our TOS, but we reserve the right to suspend or remove anyone from this forum without notice.</p>
+
+		<p>When in doubt, consider rule 2.</p>
+
+		<p>Thank you.</p>
+	</div>
+	<div class='col-sm-3'></div>
+
+
+{% endblock %}

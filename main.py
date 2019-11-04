@@ -10,6 +10,8 @@ from user import User
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=365)
+sslify = SSLify(app)
+
 
 @app.route("/profile")
 def profile():
@@ -134,6 +136,15 @@ def process():
         else:
             flash('There was an unexpected error when trying to delete your inbox filter.', 'danger')
             return redirect('/')
+
+@app.route('/privacy_policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
+@app.route('/tos')
+def tos():
+    return render_template('tos.html')
+
 
 
 
