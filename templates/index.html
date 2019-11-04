@@ -15,8 +15,8 @@
             <div class="collapse navbar-collapse" id="nav" class="navbar-nav mr-auto" style="justify-content: right;">
                 <a class='nav-link text-right' href="#how_it_works">How it works</a>
                 <a class='nav-link text-right' href="#get_started">Get started</a>
-                <a class='nav-link text-right' href="#undoing_the_app">Undoing the app</a>
                 <a class='nav-link text-right' href="#why_were_doing_this">Why we're doing this</a>
+                <a class='text-right' href="/undo_instructions">Undoing the app</a>
             </div>
         </nav>
     </div>
@@ -60,12 +60,25 @@
                 <h2>Here's how it works</h2>
                 <p>We’ve built a tiny free app that creates a filter in your gmail account (it only works with gmail, but it works on any browser and on your smartphone as well).</p>
 
-                <p>Once you authenticate the app (<a href='#get_started'>see here for screenshots</a>), it creates a filter that will stop Gmail categorizing messages from the 98 voices as promotions.</p>
+                <p>Once you authenticate the app (see below for screenshots), it creates a filter that will stop Gmail categorizing messages from the 98 voices as promotions.</p>
                 <div class='callout'>
                     <p><b>NOTE! Fixing the promo folder won't subscribe you to any new emails. The only thing it does is stop Google from removing emails you want.</b></p>
                 </div>
 
                 <p>Installing the app doesn't sign you up for any newsletters, promos or other email other than rare technical notes about how the app works.</p>
+
+                <p>It won’t slow down your computer. We’ve posted our code on Github so you can see exactly what it does. Even though Google says that the app can view and modify your mail, it doesn’t. All it does is create a bunch of filters that tell Google to put the emails back where they belong.</p>
+
+                <p>Here are the windows you’ll see:</p>
+                <div class="row" id='screenshots'>
+                    <div class='col-sm-6'>
+                        <img src="/static/img/step1.png" class='w-100' alt="Step One" style='margin-bottom: 2em;'> 
+
+                    </div>
+                    <div class='col-sm-6'>
+                        <img src="/static/img/step2.png" class='w-100' alt="Step Two">
+                    </div>
+                </div>
             </div>
             <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
@@ -77,35 +90,12 @@
                 <p>Just click the button. Google will then present you with two or three dialogue boxes you need to check to confirm you want to use it. That’s it.</p>
 
                 <div class="text-center">
-                    <a class='btn btn-primary w-100' href="/process">Go</a>
+                    <a class='btn btn-primary' href="/process">Create my filter</a>
                 </div>
 
-                <p>It won’t slow down your computer. We’ve posted our code on Github so you can see exactly what it does. Even though Google says that the app can view and modify your mail, it doesn’t. All it does is create a bunch of filters that tell Google to put the emails back where they belong.</p>
-
-                <p>Here are the windows you’ll see:</p>
-
-                <div id='screenshots' class='row'>
-                    <div class='col-6'>
-                        <img src="/static/img/step1.png" alt="Step One"> 
-                        <img src="/static/img/step2.png" alt="Step Two">
-                    </div> 
-                    <div class='col-6'>
-                        <img src="/static/img/step3.png" alt="Step 3">
-                    </div>   
-                </div>
             </div>
             <div class='col-sm-1 col-md-2 col-lg-3'></div>
         </div>
-
-        <div class='row' id="undoing_the_app">
-            <div class='col-sm-4 col-sm-1 col-md-2 col-lg-3'></div>
-            <div class='col-sm-10 col-md-8 col-lg-6'>
-                <h2>Undoing the app</h2>
-                <p>It’s as easy to remove the filter as it is to create it. Click the button on <a href="/undo_instructions">this page</a>, sign in, and we'll remove the filter. You can also edit the filter and remove names individually in your <a href="https://mail.google.com/mail/u/0/#settings/filters">Gmail settings</a>.</p>
-            </div>
-            <div class='col-sm-1 col-md-2 col-lg-3'></div>
-        </div>
-
 
         <div class='row' id="why_were_doing_this">
             <div class='col-sm-4 col-sm-1 col-md-2 col-lg-3'></div>

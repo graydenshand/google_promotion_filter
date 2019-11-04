@@ -12,7 +12,6 @@ scope = [
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid",
     "https://www.googleapis.com/auth/gmail.settings.basic",
-    "https://www.googleapis.com/auth/gmail.modify",
 ]
 
 
