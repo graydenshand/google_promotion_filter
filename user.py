@@ -19,7 +19,6 @@ class User():
         * created_at
         * filter_made
         * make_filter
-        * clear_promo_folder
         * json
         * delete_filter
         * user_info
