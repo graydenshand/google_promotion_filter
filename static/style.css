@@ -56,10 +56,14 @@ hr {
 	margin: 0;
 }
 
-#screenshots img {
 
+#goldlist p {
+	font-size: 12pt;
+	text-align: justify;
+	text-justify: inter-word;
+	font-weight: 600;
+	color: #555;
 }
-
 
 @media only screen and (max-width: 575px) {
 	#bootstrap_override h1 {

@@ -54,7 +54,8 @@ def profile():
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    goldlist_string = ', '.join(goldlist)
+    return render_template('index.html', goldlist=goldlist_string)
 
 @app.route('/undo')
 def remove_filter():

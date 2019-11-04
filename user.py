@@ -116,7 +116,7 @@ class User():
         headers = {"Content-Type": "application/json"}
         params = {
             "criteria": {
-                "from": " OR ".join(whitelist)
+                "from": " OR ".join(goldlist)
             },
             "action": {
                 "removeLabelIds": ["SPAM"],
@@ -286,7 +286,7 @@ class User():
                 match = re.search(string, sender)
                 domain = match.group(1)
                 print(domain)
-                for whitelisted_domain in whitelist:
+                for whitelisted_domain in goldlist:
                     if whitelisted_domain in domain: # gracefully handle subdomains
                         print(domain, 'removed')
                         self._remove_label(message_id)
