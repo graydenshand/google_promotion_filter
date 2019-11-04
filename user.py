@@ -206,98 +206,6 @@ class User():
         self._token = token
         return self
 
-    def _get_messages(self, wait_time=1):
-        if self.token() is None:
-            raise Exception("User's Oauth2 token is None")
-        google = OAuth2Session(client_id, token=self.token())
-        if self.token()['expires_at'] < time()+10:
-            google = self.refresh_token()
-            if google == 'refresh_error':
-                return 'refresh_error'
-        r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=CATEGORY_PROMOTIONS")
-
-        if str(r.status_code)[0] == '2':
-            return r.json()['messages']
-        elif r.status_code == 429:
-            if wait_time <= 8:
-                sleep(wait_time)
-                return self._get_messages(wait_time*2)
-            else:
-                print(r.status_code, r.text)
-                return False
-        else:
-            print(r.status_code, r.text)
-            return False
-
-    def _get_message(self, message_id, wait_time=1):
-        if self.token() is None:
-            raise Exception("User's Oauth2 token is None")
-        google = OAuth2Session(client_id, token=self.token())
-        if self.token()['expires_at'] < time()+10:
-            google = self.refresh_token()
-            if google == 'refresh_error':
-                return 'refresh_error'
-        r = google.get("https://www.googleapis.com/gmail/v1/users/me/messages/{}".format(message_id))
-        
-        if str(r.status_code)[0] == '2':
-            return r.json()
-        elif r.status_code == 429:
-            if wait_time <= 8:
-                sleep(wait_time)
-                return self._get_message(wait_time*2)
-            else:
-                print(r.status_code, r.text)
-                return False
-        else:
-            print(r.status_code, r.text)
-            return False
-
-    def _remove_label(self, message_id, wait_time=1):
-        if self.token() is None:
-            raise Exception("User's Oauth2 token is None")
-        google = OAuth2Session(client_id, token=self.token())
-        if self.token()['expires_at'] < time()+10:
-            google = self.refresh_token()
-            if google == 'refresh_error':
-                return 'refresh_error'
-        params = {"removeLabelIds": ['CATEGORY_PROMOTIONS'], "addLabelIds": ['CATEGORY_PERSONAL']}
-        headers = {"Content-Type": "application/json"}
-        r = google.post("https://www.googleapis.com/gmail/v1/users/me/messages/{}/modify".format(message_id), data=json.dumps(params), headers=headers)
-        if str(r.status_code)[0] == '2':
-            return True
-        elif r.status_code == 429:
-            if wait_time <= 8:
-                sleep(wait_time)
-                return self._remove_label(wait_time*2)
-            else:
-                print(r.status_code, r.text)
-                return False
-        else:
-            print(r.status_code, r.text)
-            return False
-
-    def _validate_message(self, message_id):
-        print("new thread {}".format(message_id))
-        message = self._get_message(message_id)
-        for val in message['payload']['headers']:
-            if val['name'] == 'From':
-                sender = val['value']
-                string = re.compile("<.+@(.+)>")
-                match = re.search(string, sender)
-                domain = match.group(1)
-                print(domain)
-                for whitelisted_domain in goldlist:
-                    if whitelisted_domain in domain: # gracefully handle subdomains
-                        print(domain, 'removed')
-                        self._remove_label(message_id)
-
-    def clear_promo_folder(self):
-        promo_messages = self._get_messages()
-        for i, row in enumerate(promo_messages):
-            t = Thread(target=self._validate_message, args=(row['id'],))
-            t.start()
-        return True
-
     def _get_filter(self, wait_time=1):
         if self.filter_id() is None:
             raise Exception('Filter id not defined')
@@ -360,7 +268,8 @@ class User():
         
 
 if __name__=='__main__':
-    u = User()
+    pass
+    #u = User()
 
     # get by email
     #u.get_by_email('graydenshand@gmail.com')
@@ -395,9 +304,9 @@ if __name__=='__main__':
     #u.get_by_email('graydenshand@gmail.com')
     #u.clear_promo_folder()
 
-    u.get_by_email('graydenshand@gmail.com')
-    print(u.json())
-    print(u._get_filter())
+    #u.get_by_email('graydenshand@gmail.com')
+    #print(u.json())
+    #print(u._get_filter())
     #print(u.delete_filter())
     #print(u.make_filter())
 

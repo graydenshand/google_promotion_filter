@@ -32,8 +32,9 @@ class Db():
 
 # UNIT TESTS
 if __name__=='__main__':
-    db = Db()
-    users = db.query('select * from participant;')
-    print(users)
+    pass
+    #db = Db()
+    #users = db.query('select * from participant;')
+    #print(users)
     #users = db.query('insert into participant (email) values (%s) returning email;', ['shandgp@clarkson.edu'])
     #print(users)
