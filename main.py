@@ -6,11 +6,15 @@ from flask import Flask, request, url_for, redirect, render_template, session, f
 from flask_sslify import SSLify
 from config import *
 from user import User
+from rq import Queue
+from worker import conn
+from queue_functions import *
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=365)
 sslify = SSLify(app)
+q = Queue(connection=conn)
 
 
 @app.route("/profile")
@@ -31,7 +35,6 @@ def profile():
             # Fetch the access token
             token = google.fetch_token(token_url, client_secret=client_secret,
                     authorization_response=redirect_response)
-            print(token)
             # Fetch a protected resource, i.e. user profile
             r = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
             data = r.json()
@@ -54,8 +57,7 @@ def profile():
 
 @app.route("/")
 def index():
-    goldlist_string = ', '.join(goldlist)
-    return render_template('index.html', goldlist=goldlist_string)
+    return render_template('index.html')
 
 @app.route('/undo')
 def remove_filter():
@@ -102,41 +104,21 @@ def process():
         return redirect('/login')
     u = User(session['user'])
     if 'remove_filter' not in session.keys():
-        result = u.make_filter()
-        if result == 'refresh_error':
-            flash('We had trouble verifying your Google credentials, please try again', 'warning')
-            session['logged_in'] = False
-            session.modified = True
-            return redirect('/')
-        session['user'] = u.json() 
-        session.modified = True
+        q.enqueue(make_filters, u.json())
+        u.set_filters_made(True)
         msg = '''<p>Thank you!</p>
         <p>So glad we could help you find your voices again.</p>
         '''
         return redirect(url_for('profile', msg=msg))
     else:
-        if u.filter_id() is None:
-            session.pop('remove_filter')
-            session.modified = True
-            flash("Your filter hasn't been created yet.", 'warning')
-            return redirect('/')
-
-        result = u.delete_filter()
-        if result == 'refresh_error':
-            flash('We had trouble verifying your Google credentials, please try again', 'warning')
-            session['logged_in'] = False
-            session.modified = True
-            return redirect('/')
-        elif result == True:
-            msg = '''
-            <p>All set, your filter has been removed.</p>
-            '''
-            session.pop('remove_filter')
-            session.modified = True
-            return redirect(url_for('profile', msg=msg))
-        else:
-            flash('There was an unexpected error when trying to delete your inbox filter.', 'danger')
-            return redirect('/')
+        q.enqueue(delete_filters, u.json())
+        u.set_filters_made(False)
+        msg = '''
+        <p>All set, your filter has been removed.</p>
+        '''
+        session.pop('remove_filter')
+        session.modified = True
+        return redirect(url_for('profile', msg=msg))
 
 @app.route('/privacy_policy')
 def privacy_policy():
@@ -145,8 +127,6 @@ def privacy_policy():
 @app.route('/tos')
 def tos():
     return render_template('tos.html')
-
-
 
 
 @app.route('/clear')
